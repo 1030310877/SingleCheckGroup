@@ -103,7 +103,7 @@ public class SingleCheckGroup extends FrameLayout implements View.OnClickListene
                 if (checkId != tempId) {
                     checkId = tempId;
                     if (checkItemChanged != null) {
-                        checkItemChanged.onCheckItemChanged(checkId);
+                        checkItemChanged.onCheckItemChanged(tag, checkId);
                     }
                 }
             }
@@ -123,7 +123,7 @@ public class SingleCheckGroup extends FrameLayout implements View.OnClickListene
     }
 
     public interface onCheckItemChangedListener {
-        void onCheckItemChanged(int vId);
+        void onCheckItemChanged(String tag, int vId);
     }
 
     @Override
