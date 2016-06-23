@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="StatusButton">
+        <attr name="statusChecked" format="boolean" />
+        <attr name="statusSrc" format="reference" />
+    </declare-styleable>
+</resources>
