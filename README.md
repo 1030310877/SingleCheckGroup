@@ -6,8 +6,12 @@
 该控件的编写主要解决以上两个问题。
 
 ###使用说明
-1.SingleCheckGroup继承FrameLayout，会自动遍历所有子View（包括子ViewGroup中的View），因此，内部的view可以完全自由布局。
-2.通过view的tag属性，将实现了Checkable接口的控件记录下来，实现拥有用一Tag的控件之间的check互斥。
-3.如果是自定义的View，则View需要实现Checkable接口，并在setCheck()方法最后调用callOnClick()。
-4.被SingleCheckGroup记录下来的View，不能去实现OnClickListener监听，通过对SingleCheckGroup添加onGroupItemViewClick监听来替代。
-5.group的单项选中状态和无选中状态切换，会有onCheckItemChangedListener监听，返回处于check状态的view的Id，如果未选中，则返回-1。
+1.SingleCheckGroup继承FrameLayout(可以改为继承其他布局)，会自动遍历所有子View（包括子ViewGroup中的View），因此，<br>内部的CheckBox可以完全自由布局。
+2.通过view的tag属性，将实现了Checkable接口的CheckBox记录下来，实现拥有用一Tag的CheckBox之间的check互斥。
+3.被SingleCheckGroup记录下来的CheckBox，`不能去实现OnClickListener监听`，通过对SingleCheckGroup添加onGroupItemViewClick<br>监听来替代。
+4.group的单项选中状态和无选中状态切换，会有onCheckItemChangedListener监听，返回处于check状态的view，如果未选中<br>，则返回null。
+5.不要使用CheckBox的setCheck方法，使用setCheckedItem进行CheckBox的状态设定。
+
+
+###缺陷
+缺陷太多了，目前子View只支持CheckBox，正在为支持实现了Checkable的自定义View以及减少使用限制努力。

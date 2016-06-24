@@ -15,11 +15,13 @@ import java.util.HashMap;
  * Created by chenqiao on 2016/6/23.
  */
 public class SingleCheckGroup extends FrameLayout implements View.OnClickListener {
+    //组记录
     private HashMap<String, ArrayList<Checkable>> maps;
+    //组选中项纪录
+    private HashMap<String, View> checkedItemMap;
     private onGroupItemViewClick itemClickListener;
     private onCheckItemChangedListener checkItemChanged;
     private boolean broadCast = false;
-    private int checkId = -1;
 
     public SingleCheckGroup(Context context) {
         this(context, null);
@@ -32,6 +34,7 @@ public class SingleCheckGroup extends FrameLayout implements View.OnClickListene
     public SingleCheckGroup(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         maps = new HashMap<>();
+        checkedItemMap = new HashMap<>();
     }
 
     @Override
@@ -77,12 +80,12 @@ public class SingleCheckGroup extends FrameLayout implements View.OnClickListene
 
     private void checkState(View v) {
         if (maps != null && v.getTag() != null) {
-            int tempId = 0;
+            View tempView = null;
             String tag = (String) v.getTag();
             ArrayList<Checkable> checkAbles = maps.get(tag);
             if (v instanceof Checkable) {
                 if (((Checkable) v).isChecked()) {
-                    tempId = v.getId();
+                    tempView = v;
                     for (Checkable check : checkAbles) {
                         if (!check.equals(v)) {
                             check.setChecked(false);
@@ -97,13 +100,37 @@ public class SingleCheckGroup extends FrameLayout implements View.OnClickListene
                         }
                     }
                     if (allFalse) {
-                        tempId = -1;
+                        tempView = null;
                     }
                 }
-                if (checkId != tempId) {
-                    checkId = tempId;
+
+                View checkedView = checkedItemMap.get(tag);
+                checkedItemMap.remove(tag);
+                if (tempView != null) {
+                    checkedItemMap.put(tag, v);
+                }
+                if (tempView != checkedView) {
                     if (checkItemChanged != null) {
-                        checkItemChanged.onCheckItemChanged(tag, checkId);
+                        checkItemChanged.onCheckItemChanged(tag, tempView);
+                    }
+                }
+            }
+        }
+    }
+
+    public void setCheckedItem(String tag, int viewId) {
+        ArrayList<Checkable> checkAbles = maps.get(tag);
+        if (checkAbles != null && checkAbles.size() > 0) {
+            for (Checkable check : checkAbles) {
+                if (viewId < 0) {
+                    check.setChecked(false);
+                } else {
+                    if (check instanceof View) {
+                        if (((View) check).getId() == viewId) {
+                            check.setChecked(true);
+                            checkState((View) check);
+                            return;
+                        }
                     }
                 }
             }
@@ -123,12 +150,13 @@ public class SingleCheckGroup extends FrameLayout implements View.OnClickListene
     }
 
     public interface onCheckItemChangedListener {
-        void onCheckItemChanged(String tag, int vId);
+        void onCheckItemChanged(String tag, View checkedView);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         maps.clear();
+        checkedItemMap.clear();
     }
 }
