@@ -70,9 +70,11 @@ public class SingleCheckGroup extends FrameLayout implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        if (itemClickListener != null && !broadCast) {
+        if (!broadCast) {
             broadCast = true;
-            itemClickListener.onItemClick(v);
+            if (itemClickListener != null) {
+                itemClickListener.onItemClick(v);
+            }
             checkState(v);
             broadCast = false;
         }
