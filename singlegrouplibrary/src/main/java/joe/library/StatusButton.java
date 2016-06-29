@@ -53,6 +53,12 @@ public class StatusButton extends ImageView implements Checkable {
     }
 
     @Override
+    public boolean performClick() {
+        toggle();
+        return super.performClick();
+    }
+
+    @Override
     public boolean isChecked() {
         return mChecked;
     }

@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SingleCheckGroup.iml" filepath="$PROJECT_DIR$/SingleCheckGroup.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/singlegrouplibrary/library.iml" filepath="$PROJECT_DIR$/singlegrouplibrary/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/singlegrouplibrary/singlegrouplibrary.iml" filepath="$PROJECT_DIR$/singlegrouplibrary/singlegrouplibrary.iml" />
     </modules>
   </component>
